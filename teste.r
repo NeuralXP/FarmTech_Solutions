@@ -1,4 +1,4 @@
-# Instale os pacotes, se ainda não os tiver:
+# Instalçao dos pacotes
 if (!require("httr")) install.packages("httr")
 if (!require("jsonlite")) install.packages("jsonlite")
 if (!require("rlang")) install.packages("rlang")
@@ -8,8 +8,7 @@ install.packages("rlang")
 install.packages("httr")
 
 
-# Defina os parâmetros para a consulta
-# Exemplo: Coordenadas para São Paulo
+#Definição das Coordenadas para São Paulo
 latitude <- -23.5505
 longitude <- -46.6333
 
@@ -17,7 +16,7 @@ longitude <- -46.6333
 url <- "https://api.open-meteo.com/v1/forecast"
 
 # Parâmetros da consulta:
-# - 'hourly' define quais variáveis horárias queremos, aqui "temperature_2m"
+# - 'hourly' define quais variáveis horárias: "temperature_2m"
 # - 'current_weather' solicita os dados do tempo atual
 params <- list(
   latitude = latitude,
@@ -40,13 +39,13 @@ if (status_code(response) == 200) {
   cat("Data/Hora: ", data_json$current_weather$time, "\n")
   cat("Temperatura: ", data_json$current_weather$temperature, "°C\n\n")
   
-  # Exemplo: Exibe as previsões horárias de temperatura
+  # Exibe as previsões horárias de temperatura
   cat("== Previsão Horária de Temperatura ==\n")
   times <- data_json$hourly$time
   temps <- data_json$hourly$temperature_2m
   
-  # Exibe as primeiras 6 previsões (você pode ajustar conforme necessário)
-  for(i in seq_len(min(6, length(times)))) {
+  # Exibe as primeiras 2 previsões (você pode ajustar conforme necessário)
+  for(i in seq_len(min(2, length(times)))) {
     cat(sprintf("%s : %.1f °C\n", times[i], temps[i]))
   }
   
