@@ -53,4 +53,3 @@ if (status_code(response) == 200) {
 } else {
   cat("Falha na requisição. Código de status:", status_code(response), "\n")
 }
-
