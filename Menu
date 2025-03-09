@@ -1,0 +1,73 @@
+
+dados = {}  
+
+def calcular_area(formato, *args):
+    if formato   =="retangulo":
+        # args[0] é o comprimento e args[1] é a largura.
+        return args[0] * args[1]
+    elif formato =="circulo":
+        # args[0] é o raio.
+        return 3.14 * (args[0] ** 2)  
+
+def calcular_insumos(cultura, area):
+    insumos ={"Milho": (100, "Fertilizante"), "Soja": (600, "Fosfato")}  
+    litros_por_m2, tipo_insumo = insumos.get(cultura, (0, "Desconhecido"))  
+    return area * litros_por_m2, tipo_insumo  
+
+def set_dados():
+    global dados 
+    opcoes ={"1": "Milho", "2": "Soja"}  
+    print("1 - Milho\n2 - Soja")
+    opcao  =input("Escolha a cultura: ")  
+    
+    cultura = opcoes.get(opcao)  
+    
+    if not cultura:
+        print("Opção inválida.")  
+        return
+    
+    if cultura =="Milho":
+        area    =calcular_area("retangulo", float(input("Comprimento: ")), float(input("Largura: ")))
+    else:
+        area    =calcular_area("circulo", float(input("Raio: ")))
+    
+    qnt_insumos, tipo_insumo =calcular_insumos(cultura, area)
+    dados                    ={"Cultura": cultura, "Área": area, "Quantidade de insumos": qnt_insumos, "Tipo de insumo": tipo_insumo}
+    print("Dados salvos com sucesso!")
+
+def get_dados():
+    if not dados:  
+        print("Não há dados para resgatar!")
+        return
+    
+    print("\nDados do plantio:")
+    for chave, valor in dados.items(): 
+        print(f"{chave}: {valor}")
+
+def delete_dados():
+    global dados
+    if not dados: 
+        print("Não há dados para deletar!")
+        return
+    
+    dados.clear()  
+    print("Dados deletados com sucesso!") 
+
+def menu():
+    opcoes ={
+        "1": set_dados,
+        "2": get_dados,  
+        "3": delete_dados,  
+        "4": exit
+    }
+    while True:
+        print("\n1 - Informar dados\n2 - Resgatar dados\n3 - Deletar dados\n4 - Sair")
+        escolha =input("Escolha uma opção: ")
+        
+        if escolha in opcoes:
+            opcoes[escolha]() 
+        else:
+            print("Opção inválida! Tente novamente.")
+
+if __name__ =="__main__":
+    menu()
