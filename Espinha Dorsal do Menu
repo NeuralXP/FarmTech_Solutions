@@ -1,0 +1,22 @@
+def informar_dados():
+    print("Coloque o código para coletar a cultura e o raio(soja) ou area(milho)")
+        
+def resgatar_dados():
+    print("Retorne ao usuário os dados do mesmo ou diga que não há dados")
+
+def deletar_dados():
+    print("Delete os dados")
+
+print("1- Informar Dados \n2- Resgatar Dados \n3- Deletar Dados \n4- Sair")
+escolha = int(input("Escolha uma opção: "))
+
+match escolha:
+    case 1:
+        informar_dados()
+    case 2:
+        resgatar_dados()
+    case 3:
+        deletar_dados()
+    case 4:
+        print("Saindo... Até mais!")
+        exit
