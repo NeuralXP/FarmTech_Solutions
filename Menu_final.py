@@ -1,25 +1,39 @@
+# Importação das bibliotecas necessárias
+
 import math
 import subprocess
 import sys
 
+# Lista global para armazenar dados do plantio
 dados              =[]
 
+
+# Função para calcular a quantidade de insumo necessária para uma área de plantio de milho
+
 def insumos_milho(area: float):
-    litros_insumo_por_m2 =100
-    tipo_insumo          ="Fertilizante"
-    qnt_insumo           =area *float(litros_insumo_por_m2)
+    litros_insumo_por_m2 =100 # Quantidade de insumo por metro quadrado
+    tipo_insumo          ="Fertilizante"  # Tipo de insumo utilizado
+    qnt_insumo           =area *float(litros_insumo_por_m2) # Cálculo da quantidade total de insumo
     return                qnt_insumo, tipo_insumo
 
+
+# Função para calcular a quantidade de insumo necessária para uma área de plantio de soja
+
 def insumos_soja(area: float):
-    litros_insumo_por_m2 =600
-    tipo_insumo          ="Fosfato"
-    qnt_insumo           = area *float(litros_insumo_por_m2)
+    litros_insumo_por_m2 =600 # Quantidade de insumo por metro quadrado
+    tipo_insumo          ="Fosfato" # Tipo de insumo utilizado
+    qnt_insumo           = area *float(litros_insumo_por_m2) # Cálculo da quantidade total de insumo
     return                 qnt_insumo, tipo_insumo
+
+# Função para obter e armazenar os dados do plantio
 
 def informar_dados():
     global dados
     print         ("Selecione o tipo de cultura: ")
     opcao = input ("Milho (1) ou Soja (2)? ").strip()
+
+    # Identificação da cultura e cálculo da área
+
     match opcao.lower():
         case "1" | "milho" | "Milho":
             comprimento     =float(input("Um plantio de Milho irá necessitar um terreno retangular. \nQual o Comprimento de sua futura plantação de Milho? "))
@@ -40,6 +54,8 @@ def informar_dados():
         case "2" | "soja" | "Soja":
             info_soja = input("Um plantio de Soja irá necessitar um terreno circular. \nQual informação do seu terreno o Sr./Sr.a tem? \n1- Diâmetro \n2- Circunferência \n").strip().lower()
 
+            # Cálculo do raio com base na entrada do usuário
+
             if info_soja in["diametro", "diâmetro", "1", "Diametro", "Diâmetro"]:
                 d    =float(input("Digite o diâmetro: "))
                 raio =d /2
@@ -51,21 +67,23 @@ def informar_dados():
                 return 
 
             cultura ="Soja"
-            area =math.pi *(raio **2)
+            area =math.pi *(raio **2) # Área de um círculo: πr²
             qnt_insumo, tipo_insumo =insumos_soja(area)
             
             
         case _:
             print("Opção Inválida")
             return
-        
+
+    # Armazenamento dos dados coletados   
     dados.append(cultura)
     dados.append(area)
     dados.append(tipo_insumo)
     dados.append(qnt_insumo)
-    print(f"Os dados do seu plantio foram armazenados com sucesso!") 
+    print(f"Os dados do seu plantio foram armazenados com sucesso!")  
     back_to_menu()
 
+# Função para exibir os dados armazenados
 def resgatar_dados():
     if dados:
         print(f"Dados do plantio: \nCultura: {dados[0]} \nArea: {dados[1]:.2f} m² \nTipo de insumo: {dados[2]} \nQuantidade de insumos: {dados[3]:.2f} litros/m² ")
@@ -75,6 +93,7 @@ def resgatar_dados():
     
     back_to_menu()
 
+# Função para alterar os dados já armazenados
 def alterar_dados():
     global dados
     if dados:
@@ -192,6 +211,7 @@ def deletar_dados():
     
     back_to_menu()
 
+# Função para consultar a API e obter a previsão do tempo
 def consultar_previsao_tempo():
     try:
         resultado = subprocess.run(['Rscript', 'previsao_do_tempo.r'], capture_output=True, text=True)
@@ -200,7 +220,7 @@ def consultar_previsao_tempo():
     except FileNotFoundError:
         print('Erro: Certifique-se de que o arquivo "previsao_do_tempo.r" está no mesmo diretório.')
 
-
+# Função principal do menu de opções
 def menu():
     while True:
         print("\n1- Informar Dados \n2- Resgatar Dados \n3- Alterar Dados \n4- Deletar Dados \n5- Sair \n6- Consultar Previsão do Tempo\n")
