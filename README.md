@@ -47,6 +47,7 @@ project/
 ├── main.py                # Código principal em Python
 └── README.md              # Este arquivo
 
+```r
 
 Esse formato está pronto para ser copiado diretamente para o seu arquivo `README.md` no GitHub. Fique à vontade para clonar este projeto e ajustar conforme necessário!
 
